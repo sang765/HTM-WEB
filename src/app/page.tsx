@@ -7,7 +7,7 @@ import Image from "next/image";
 import { useTheme } from "next-themes";
 import * as React from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
 
 const features = [
   {
@@ -97,6 +97,7 @@ export default function Home() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="left">
+                <SheetTitle className="sr-only">Menu</SheetTitle>
                 <div className="grid gap-4 py-4">
                    <Link href="#features" className="text-muted-foreground">
                     Features
