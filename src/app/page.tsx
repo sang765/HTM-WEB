@@ -137,6 +137,36 @@ export default function Home() {
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
        <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 items-center">
+          <div className="flex items-center md:hidden">
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="icon" className="mr-2">
+                  <Menu className="size-5" />
+                  <span className="sr-only">Mở menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left">
+                <SheetTitle className="sr-only">Menu</SheetTitle>
+                <div className="grid gap-4 py-4">
+                   <Link href="#features" className="text-muted-foreground">
+                    Tính năng
+                  </Link>
+                  <Link href="#screenshots" className="text-muted-foreground">
+                    Ảnh chụp màn hình
+                  </Link>
+                   <Link href="#installation" className="text-muted-foreground">
+                    Cài đặt
+                  </Link>
+                   <Link href="#faq" className="text-muted-foreground">
+                    Hỏi đáp
+                  </Link>
+                  <Link href="https://github.com/sang765/HakoMonetTheme" target="_blank" rel="noopener noreferrer" className="text-muted-foreground">
+                    GitHub
+                  </Link>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
           <div className="mr-4 flex items-center">
             <Link href="/" className="mr-2 flex items-center space-x-2">
               <Image
@@ -165,34 +195,6 @@ export default function Home() {
           </nav>
           <div className="flex-1" />
           <div className="flex items-center gap-2">
-             <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="icon" className="md:hidden">
-                  <Menu className="size-5" />
-                  <span className="sr-only">Mở menu</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="left">
-                <SheetTitle className="sr-only">Menu</SheetTitle>
-                <div className="grid gap-4 py-4">
-                   <Link href="#features" className="text-muted-foreground">
-                    Tính năng
-                  </Link>
-                  <Link href="#screenshots" className="text-muted-foreground">
-                    Ảnh chụp màn hình
-                  </Link>
-                   <Link href="#installation" className="text-muted-foreground">
-                    Cài đặt
-                  </Link>
-                   <Link href="#faq" className="text-muted-foreground">
-                    Hỏi đáp
-                  </Link>
-                  <Link href="https://github.com/sang765/HakoMonetTheme" target="_blank" rel="noopener noreferrer" className="text-muted-foreground">
-                    GitHub
-                  </Link>
-                </div>
-              </SheetContent>
-            </Sheet>
             <Popover>
               <PopoverTrigger asChild>
                 <Button variant="outline" size="icon">
