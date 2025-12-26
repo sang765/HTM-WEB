@@ -12,26 +12,46 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Badge } from "@/components/ui/badge";
 
 const features = [
-  {
-    icon: <Paintbrush className="size-8 text-primary" />,
-    title: "Tự động phân tích màu sắc",
-    description: "Tự động phân tích màu sắc từ ảnh bìa truyện để tạo ra một giao diện độc đáo.",
-  },
-  {
-    icon: <Sparkles className="size-8 text-primary" />,
-    title: "Material You à la Hako",
-    description: "Áp dụng Material You color scheme động, mang lại trải nghiệm cá nhân hóa.",
-  },
-  {
-    icon: <LayoutTemplate className="size-8 text-primary" />,
-    title: "Giao diện Responsive",
-    description: "Giao diện được thiết kế để hoạt động mượt mà trên cả máy tính và điện thoại.",
-  },
-  {
-    icon: <Moon className="size-8 text-primary" />,
-    title: "Hỗ trợ Dark Mode",
-    description: "Chế độ tối được tối ưu hóa, giúp bảo vệ mắt của bạn khi đọc truyện vào ban đêm.",
-  },
+    {
+        icon: <Paintbrush className="size-8 text-primary" />,
+        title: "Tự động phân tích màu sắc",
+        description: "Tự động phân tích màu sắc từ ảnh bìa truyện để tạo ra một giao diện độc đáo.",
+    },
+    {
+        icon: <Sparkles className="size-8 text-primary" />,
+        title: "Material You à la Hako",
+        description: "Áp dụng Material You color scheme động, mang lại trải nghiệm cá nhân hóa.",
+    },
+    {
+        icon: <LayoutTemplate className="size-8 text-primary" />,
+        title: "Giao diện Responsive",
+        description: "Giao diện được thiết kế để hoạt động mượt mà trên cả máy tính và điện thoại.",
+    },
+    {
+        icon: <Moon className="size-8 text-primary" />,
+        title: "Hỗ trợ Dark Mode",
+        description: "Chế độ tối được tối ưu hóa, giúp bảo vệ mắt của bạn khi đọc truyện vào ban đêm.",
+    },
+    {
+        icon: <Rocket className="size-8 text-primary" />,
+        title: "Tối ưu hóa trải nghiệm",
+        description: "Tối ưu hóa trải nghiệm đọc truyện của bạn với các tính năng hữu ích."
+    },
+    {
+        icon: <ShieldCheck className="size-8 text-primary" />,
+        title: "Chặn quảng cáo popup",
+        description: "Chặn quảng cáo popup, bảo vệ thông tin đăng nhập Google/Facebook của bạn."
+    },
+    {
+        icon: <Download className="size-8 text-primary" />,
+        title: "Tự động cập nhật",
+        description: "Tự động kiểm tra và cập nhật phiên bản mới nhất của script."
+    },
+    {
+        icon: <Paintbrush className="size-8 text-primary" />,
+        title: "Tag màu sắc theo thể loại",
+        description: "Phân biệt các thể loại truyện bằng màu sắc riêng biệt."
+    }
 ];
 
 const technicalFeatures = [
@@ -102,7 +122,44 @@ const colors = [
   { name: 'Violet', hsl: '262.1 83.3% 57.8%' },
 ];
 
+function hexToHsl(hex: string): string | null {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  if (!result) return null;
+
+  let r = parseInt(result[1], 16) / 255;
+  let g = parseInt(result[2], 16) / 255;
+  let b = parseInt(result[3], 16) / 255;
+
+  const max = Math.max(r, g, b), min = Math.min(r, g, b);
+  let h = 0, s = 0, l = (max + min) / 2;
+
+  if (max !== min) {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+    h /= 6;
+  }
+
+  h = Math.round(h * 360);
+  s = Math.round(s * 100);
+  l = Math.round(l * 100);
+
+  return `${h} ${s}% ${l}%`;
+}
+
+
 function ColorPicker({ setColor }: { setColor: (color: string) => void }) {
+  const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const hslColor = hexToHsl(e.target.value);
+      if (hslColor) {
+          setColor(hslColor);
+      }
+  };
+
   return (
     <div className="grid grid-cols-5 gap-2">
       {colors.map((color) => (
@@ -116,6 +173,17 @@ function ColorPicker({ setColor }: { setColor: (color: string) => void }) {
           aria-label={`Set color to ${color.name}`}
         />
       ))}
+      <div className="relative size-8">
+        <input
+            type="color"
+            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+            onChange={handleColorChange}
+            aria-label="Custom color picker"
+        />
+        <div className="w-full h-full rounded-full border flex items-center justify-center bg-transparent pointer-events-none">
+            <Paintbrush className="size-4" />
+        </div>
+      </div>
     </div>
   );
 }
@@ -137,10 +205,10 @@ export default function Home() {
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
        <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 items-center">
-          <div className="flex items-center md:hidden">
+          <div className="mr-4 flex items-center md:hidden">
             <Sheet>
               <SheetTrigger asChild>
-                <Button variant="outline" size="icon" className="mr-2">
+                <Button variant="outline" size="icon">
                   <Menu className="size-5" />
                   <span className="sr-only">Mở menu</span>
                 </Button>
@@ -172,7 +240,7 @@ export default function Home() {
               </SheetContent>
             </Sheet>
           </div>
-          <div className="mr-4 flex items-center">
+          <div className="flex items-center">
             <Link href="/" className="mr-2 flex items-center space-x-2">
               <Image
                   src="https://raw.githubusercontent.com/sang765/HakoMonetTheme/main/.github/assets/logo.png"
@@ -241,7 +309,7 @@ export default function Home() {
                 <div className="flex justify-center gap-2 flex-wrap">
                     <img src="https://img.shields.io/badge/Tampermonkey-Supported-green.svg" alt="Tampermonkey Supported" />
                     <img src="https://img.shields.io/badge/Violentmonkey-Supported-green.svg" alt="Violentmonkey Supported" />
-                    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License MIT" />
+                    <a href="./LICENSE" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License MIT" /></a>
                     <a href="https://discord.gg/uvQ6A3CDPq" target="_blank" rel="noopener noreferrer">
                         <img src="https://img.shields.io/discord/1201419657282863104?style=for-the-badge&logo=discord&logoColor=%23fff&logoSize=25&label=Tham%20gia%20Discord&color=%235865f2" alt="Discord" />
                     </a>
@@ -312,6 +380,9 @@ export default function Home() {
                  <Card className="overflow-hidden"><CardContent className="p-0"><Image src="https://raw.githubusercontent.com/sang765/HakoMonetTheme/main/.github/assets/home-theme-preview.webp" width={600} height={400} alt="Homepage Preview" className="w-full h-auto" /></CardContent><CardHeader><CardTitle>Trang chủ</CardTitle></CardHeader></Card>
                  <Card className="overflow-hidden"><CardContent className="p-0"><Image src="https://raw.githubusercontent.com/sang765/HakoMonetTheme/main/.github/assets/info-truyen-theme-preview.webp" width={600} height={400} alt="Novel Info Preview" className="w-full h-auto" /></CardContent><CardHeader><CardTitle>Trang thông tin truyện</CardTitle></CardHeader></Card>
                  <Card className="overflow-hidden"><CardContent className="p-0"><Image src="https://raw.githubusercontent.com/sang765/HakoMonetTheme/main/.github/assets/desktop-settings.webp" width={600} height={400} alt="Settings Preview" className="w-full h-auto" /></CardContent><CardHeader><CardTitle>Cài đặt Userscript</CardTitle></CardHeader></Card>
+                 <Card className="overflow-hidden"><CardContent className="p-0"><Image src="https://www.tampermonkey.net/images/chrome_extensions.jpg" width={600} height={400} alt="Chrome Extensions" className="w-full h-auto" /></CardContent><CardHeader><CardTitle>Trang extension</CardTitle></CardHeader></Card>
+                 <Card className="overflow-hidden"><CardContent className="p-0"><Image src="https://www.tampermonkey.net/images/developer_mode.jpg" width={600} height={400} alt="Developer Mode" className="w-full h-auto" /></CardContent><CardHeader><CardTitle>Bật Developer Mode</CardTitle></CardHeader></Card>
+                 <Card className="overflow-hidden"><CardContent className="p-0"><Image src="https://www.tampermonkey.net/images/userscripts_toggle.png" width={600} height={400} alt="Allow file URLs" className="w-full h-auto" /></CardContent><CardHeader><CardTitle>Cho phép truy cập tệp</CardTitle></CardHeader></Card>
               </div>
             </div>
           </div>
@@ -345,6 +416,12 @@ export default function Home() {
                                         <Link href="https://violentmonkey.github.io/get-it/" target="_blank" rel="noopener noreferrer">Violentmonkey <ArrowRight /></Link>
                                     </Button>
                                 </div>
+                                 <Card className="mt-4">
+                                  <CardContent className="p-4">
+                                    <p className="text-sm text-muted-foreground">Nếu bạn sử dụng Tampermonkey (Manifest V3) trên Chromium 138+, bạn cần bật Developer Mode và cấp quyền truy cập tệp.</p>
+                                    <Link href="https://www.tampermonkey.net/faq.php?locale=en#Q209" target="_blank" className="text-sm text-primary hover:underline">Đọc thêm</Link>
+                                  </CardContent>
+                                </Card>
                             </CardContent>
                         </Card>
                         <Card>
@@ -453,6 +530,67 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* Update and Issues Section */}
+        <section id="updates" className="w-full py-16 md:py-24 bg-card/50 border-t">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="grid gap-12 md:grid-cols-2">
+                <div>
+                    <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl mb-4">🔄 Cập nhật 🔄</h2>
+                    <div className="space-y-4 text-muted-foreground">
+                        <p>Script sẽ tự động kiểm tra cập nhật mỗi 30 phút. Bạn cũng có thể kiểm tra thủ công:</p>
+                        <ol className="list-decimal list-inside space-y-2">
+                            <li>Mở dashboard của Tampermonkey/Violentmonkey</li>
+                            <li>Tìm script "Hako: Monet Theme"</li>
+                            <li>Nhấn "Check for updates"</li>
+                        </ol>
+                    </div>
+                </div>
+                <div>
+                    <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl mb-4">🐛 Báo cáo lỗi & Đề xuất 🐛</h2>
+                     <div className="space-y-4 text-muted-foreground">
+                        <p>Nếu bạn gặp vấn đề hoặc có đề xuất cải tiến, vui lòng:</p>
+                         <ol className="list-decimal list-inside space-y-2">
+                            <li>Mô tả chi tiết vấn đề hoặc ý tưởng của bạn.</li>
+                            <li>Kèm theo screenshot nếu có thể.</li>
+                        </ol>
+                         <Button asChild className="mt-4">
+                            <Link href="https://github.com/sang765/HakoMonetTheme/issues" target="_blank" rel="noopener noreferrer">Tạo issue mới</Link>
+                        </Button>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Usage Guide Section */}
+        <section id="usage" className="w-full py-16 md:py-24 border-t">
+            <div className="container mx-auto px-4 md:px-6">
+                <div className="text-center space-y-4 mb-12">
+                    <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">📖 Hướng dẫn sử dụng 📖</h2>
+                </div>
+                <div className="grid gap-8 md:grid-cols-2">
+                    <Card>
+                        <CardHeader><CardTitle>Với người dùng phổ thông</CardTitle></CardHeader>
+                        <CardContent>
+                            <p>Chỉ cần vào trang web và tận hưởng thành quả. Nếu cần update màu theme chỉ cần mở script manager extension của bạn lên rồi click "Menu chính &gt; Cài đặt".</p>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader><CardTitle>Với developer và phát triển repository</CardTitle></CardHeader>
+                        <CardContent>
+                             <p>Vui lòng đọc các hướng dẫn sau:</p>
+                             <div className="mt-4 space-y-2">
+                                <Button asChild variant="outline" className="w-full justify-between"><Link href="https://github.com/sang765/HakoMonetTheme/blob/main/docs/monet-api-guide.md" target="_blank">Hướng dẫn API chung <ArrowRight /></Link></Button>
+                                <Button asChild variant="outline" className="w-full justify-between"><Link href="https://github.com/sang765/HakoMonetTheme/blob/main/docs/monet-api-v1-guide.md" target="_blank">Hướng dẫn MonetAPI v1 <ArrowRight /></Link></Button>
+                                <Button asChild variant="outline" className="w-full justify-between"><Link href="https://github.com/sang765/HakoMonetTheme/blob/main/docs/monet-api-v2-guide.md" target="_blank">Hướng dẫn MonetAPI v2 <ArrowRight /></Link></Button>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
+        </section>
+
       </main>
 
       {/* Footer */}
@@ -463,12 +601,10 @@ export default function Home() {
                  <p className="text-xs text-muted-foreground">Lưu ý: Script này không chính thức liên kết với Hako/DocLN và được phát triển độc lập bởi cộng đồng.</p>
             </div>
             <div className="text-center text-sm text-muted-foreground">
-                 <p>Built with Next.js, shadcn/ui, and Tailwind CSS.</p>
+                 <p>Built with Next.js, shadcn/ui, and Tailwind CSS. Thanks to the contributors and community for their ideas and bug reports.</p>
             </div>
         </div>
       </footer>
     </div>
   );
 }
-
-    
