@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Github, Palette, Sparkles, SunMoon, LayoutTemplate } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 const features = [
   {
@@ -35,6 +36,13 @@ export default function Home() {
            <div className="absolute inset-0 -z-10 bg-gradient-to-b from-sky-100 to-background"/>
           <div className="container mx-auto px-4 md:px-6 text-center">
             <div className="max-w-3xl mx-auto space-y-6">
+              <Image
+                src="https://raw.githubusercontent.com/sang765/HakoMonetTheme/main/.github/assets/logo.png"
+                alt="HakoMonet Theme Logo"
+                width={128}
+                height={128}
+                className="mx-auto mb-4"
+              />
               <h1 className="font-headline text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
                 HakoMonet Theme
               </h1>
