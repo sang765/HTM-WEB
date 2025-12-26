@@ -1,12 +1,13 @@
 "use client"
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Github, Palette, Sparkles, Sun, Moon, LayoutTemplate } from "lucide-react";
+import { Github, Palette, Sparkles, Sun, Moon, LayoutTemplate, Menu } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import * as React from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 const features = [
   {
@@ -74,8 +75,38 @@ export default function Home() {
     <div className="flex min-h-dvh flex-col bg-background text-foreground">
        <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 items-center">
+          <div className="mr-4 flex items-center">
+            <Link href="/" className="mr-2 flex items-center space-x-2">
+              <Image
+                  src="https://raw.githubusercontent.com/sang765/HakoMonetTheme/main/.github/assets/logo.png"
+                  width="24"
+                  height="24"
+                  alt="HakoMonet Logo"
+                  className="rounded-full"
+                />
+              <span className="font-bold">Hako: Monet Theme</span>
+            </Link>
+          </div>
           <div className="flex-1" />
           <div className="flex items-center gap-2">
+             <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="icon" className="md:hidden">
+                  <Menu className="size-5" />
+                  <span className="sr-only">Open menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="left">
+                <div className="grid gap-4 py-4">
+                   <Link href="#features" className="text-muted-foreground">
+                    Features
+                  </Link>
+                  <Link href="https://github.com/sang765/HakoMonetTheme" target="_blank" rel="noopener noreferrer" className="text-muted-foreground">
+                    GitHub
+                  </Link>
+                </div>
+              </SheetContent>
+            </Sheet>
             <Popover>
               <PopoverTrigger asChild>
                 <Button variant="outline" size="icon">
