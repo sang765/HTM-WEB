@@ -113,15 +113,6 @@ const faqItems = [
   }
 ];
 
-
-const colors = [
-  { name: 'Default', hsl: '221.2 83.2% 53.3%' },
-  { name: 'Orange', hsl: '26 83.2% 53.3%' },
-  { name: 'Green', hsl: '142.1 76.2% 36.3%' },
-  { name: 'Rose', hsl: '346.8 77.2% 49.8%' },
-  { name: 'Violet', hsl: '262.1 83.3% 57.8%' },
-];
-
 function hexToHsl(hex: string): string | null {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
   if (!result) return null;
@@ -161,18 +152,7 @@ function ColorPicker({ setColor }: { setColor: (color: string) => void }) {
   };
 
   return (
-    <div className="grid grid-cols-5 gap-2">
-      {colors.map((color) => (
-        <Button
-          key={color.name}
-          variant="outline"
-          size="icon"
-          className="size-8 rounded-full"
-          style={{ backgroundColor: `hsl(${color.hsl})` }}
-          onClick={() => setColor(color.hsl)}
-          aria-label={`Set color to ${color.name}`}
-        />
-      ))}
+    <div className="flex justify-center">
       <div className="relative size-8">
         <input
             type="color"
