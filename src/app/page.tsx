@@ -19,7 +19,7 @@ const features = [
   },
   {
     icon: <Sparkles className="size-8 text-primary" />,
-    title: "Material You a la Hako",
+    title: "Material You à la Hako",
     description: "Áp dụng Material You color scheme động, mang lại trải nghiệm cá nhân hóa.",
   },
   {
@@ -463,5 +463,7 @@ export default function Home() {
     </div>
   );
 }
+
+    
 
     
