@@ -1,36 +1,98 @@
 "use client"
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Github, Palette, Sparkles, Sun, Moon, LayoutTemplate, Menu } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Github, Palette, Sparkles, Sun, Moon, LayoutTemplate, Menu, Paintbrush, ShieldCheck, Download, Settings, Code, HelpCircle, BookOpen, Rocket, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { useTheme } from "next-themes";
 import * as React from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { Badge } from "@/components/ui/badge";
 
 const features = [
   {
-    icon: <Palette className="size-8 text-primary" />,
-    title: "Dynamic Theming",
-    description: "Automatically generates a color palette from your wallpaper, ensuring a cohesive and personal look.",
+    icon: <Paintbrush className="size-8 text-primary" />,
+    title: "Tự động phân tích màu sắc",
+    description: "Tự động phân tích màu sắc từ ảnh bìa truyện để tạo ra một giao diện độc đáo.",
   },
   {
     icon: <Sparkles className="size-8 text-primary" />,
-    title: "Material You Inspired",
-    description: "Embraces the principles of Material You, with expressive shapes, colors, and motion.",
-  },
-  {
-    icon: <Sun className="size-8 text-primary" />,
-    title: "Light & Dark Modes",
-    description: "Beautifully crafted light and dark themes that are easy on the eyes, day or night.",
+    title: "Material You a la Hako",
+    description: "Áp dụng Material You color scheme động, mang lại trải nghiệm cá nhân hóa.",
   },
   {
     icon: <LayoutTemplate className="size-8 text-primary" />,
-    title: "Clean & Modern UI",
-    description: "A focus on spacious layouts and clear typography for a clutter-free and intuitive user experience.",
+    title: "Giao diện Responsive",
+    description: "Giao diện được thiết kế để hoạt động mượt mà trên cả máy tính và điện thoại.",
+  },
+  {
+    icon: <Moon className="size-8 text-primary" />,
+    title: "Hỗ trợ Dark Mode",
+    description: "Chế độ tối được tối ưu hóa, giúp bảo vệ mắt của bạn khi đọc truyện vào ban đêm.",
   },
 ];
+
+const technicalFeatures = [
+    {
+        icon: <Code className="size-8 text-primary" />,
+        title: "Canvas API",
+        description: "Sử dụng Canvas API để phân tích màu sắc ảnh một cách hiệu quả và chính xác.",
+    },
+    {
+        icon: <Settings className="size-8 text-primary" />,
+        title: "MonetAPI v2.0-Integrated",
+        description: "Hệ thống quản lý màu sắc nâng cao với caching và tối ưu hóa khả năng truy cập.",
+    },
+    {
+        icon: <ShieldCheck className="size-8 text-primary" />,
+        title: "Ad Popup Blocker",
+        description: "Chặn quảng cáo popup, bảo vệ thông tin đăng nhập Google/Facebook của bạn.",
+    },
+    {
+        icon: <Rocket className="size-8 text-primary" />,
+        title: "Modular Architecture",
+        description: "Kiến trúc module giúp dễ dàng bảo trì, mở rộng và phát triển các tính năng mới.",
+    }
+];
+
+
+const faqItems = [
+  {
+    question: "Script này có an toàn không?",
+    answer: "Có, script này chỉ thay đổi giao diện người dùng và không thu thập dữ liệu cá nhân. Và source code ở đây thì bạn lo lắng gì nữa đúng không?",
+  },
+  {
+    question: "Làm thế nào để báo cáo lỗi?",
+    answer: "Bạn có thể tạo một issue mới trên GitHub và mô tả chi tiết về lỗi bạn gặp phải.",
+  },
+    {
+    question: "Script có hỗ trợ nhiều ngôn ngữ không?",
+    answer: "Hiện tại, script chỉ hỗ trợ tiếng Việt. Nói thẳng ra là thằng chủ repository nó bị ngu nên không biết viết multilanguage :v",
+  },
+  {
+    question: "Tôi có thể tùy chỉnh màu sắc không?",
+    answer: "Màu sắc được tự động phân tích từ ảnh bìa truyện, tuy nhiên bạn có thể điều chỉnh một số cài đặt trong phần 'Cài đặt Userscript'.",
+  },
+  {
+    question: "Script có hoạt động trên tất cả các trình duyệt không?",
+    answer: "Script được thiết kế để hoạt động trên các trình duyệt hỗ trợ Tampermonkey hoặc Violentmonkey.",
+  },
+    {
+    question: "Tôi có thể sử dụng script này trên điện thoại không?",
+    answer: "Có, script hoạt động trên cả trình duyệt di động hỗ trợ extension để cài đặt script manager.",
+  },
+    {
+    question: "Vậy trình duyệt nào hỗ trợ extension trên điện thoại?",
+    answer: "Hmm... Android bên chromium thì có Kiwi Browser, Yandex Browser, v.v... Còn iOS thì có iCab Mobile, Aloha Browser, v.v...",
+  },
+    {
+    question: "Làm thế nào để tắt script nếu tôi không muốn sử dụng nữa?",
+    answer: "Bạn có thể tắt hoặc gỡ bỏ script thông qua dashboard của Tampermonkey/Violentmonkey.",
+  }
+];
+
 
 const colors = [
   { name: 'Default', hsl: '221.2 83.2% 53.3%' },
@@ -87,20 +149,43 @@ export default function Home() {
               <span className="font-bold">Hako: Monet Theme</span>
             </Link>
           </div>
+          <nav className="hidden items-center gap-4 text-sm md:flex">
+             <Link href="#features" className="text-muted-foreground transition-colors hover:text-foreground">
+                Tính năng
+              </Link>
+              <Link href="#screenshots" className="text-muted-foreground transition-colors hover:text-foreground">
+                Ảnh chụp màn hình
+              </Link>
+              <Link href="#installation" className="text-muted-foreground transition-colors hover:text-foreground">
+                Cài đặt
+              </Link>
+              <Link href="#faq" className="text-muted-foreground transition-colors hover:text-foreground">
+                Hỏi đáp
+              </Link>
+          </nav>
           <div className="flex-1" />
           <div className="flex items-center gap-2">
              <Sheet>
               <SheetTrigger asChild>
                 <Button variant="outline" size="icon" className="md:hidden">
                   <Menu className="size-5" />
-                  <span className="sr-only">Open menu</span>
+                  <span className="sr-only">Mở menu</span>
                 </Button>
               </SheetTrigger>
               <SheetContent side="left">
                 <SheetTitle className="sr-only">Menu</SheetTitle>
                 <div className="grid gap-4 py-4">
                    <Link href="#features" className="text-muted-foreground">
-                    Features
+                    Tính năng
+                  </Link>
+                  <Link href="#screenshots" className="text-muted-foreground">
+                    Ảnh chụp màn hình
+                  </Link>
+                   <Link href="#installation" className="text-muted-foreground">
+                    Cài đặt
+                  </Link>
+                   <Link href="#faq" className="text-muted-foreground">
+                    Hỏi đáp
                   </Link>
                   <Link href="https://github.com/sang765/HakoMonetTheme" target="_blank" rel="noopener noreferrer" className="text-muted-foreground">
                     GitHub
@@ -129,27 +214,43 @@ export default function Home() {
       <main className="flex-1">
         {/* Hero Section */}
         <section className="relative w-full py-20 md:py-32 lg:py-40">
-           <div className="absolute inset-0 -z-10 bg-gradient-to-b from-sky-100 to-background dark:from-sky-900/20"/>
+           <div className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/10 to-background"/>
           <div className="container mx-auto px-4 md:px-6 text-center">
-            <div className="max-w-3xl mx-auto space-y-6">
+            <div className="max-w-4xl mx-auto space-y-6">
               <Image
                 src="https://raw.githubusercontent.com/sang765/HakoMonetTheme/main/.github/assets/logo.png"
                 alt="HakoMonet Theme Logo"
                 width={128}
                 height={128}
-                className="mx-auto mb-4"
+                className="mx-auto"
               />
               <h1 className="font-headline text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-                HakoMonet Theme
+                Hako: Monet Theme
               </h1>
-              <p className="font-body text-lg text-muted-foreground md:text-xl">
-                A modern, dynamic theme inspired by Material Design 3, bringing personalized color palettes to your projects.
+              <p className="font-body text-lg text-muted-foreground md:text-xl max-w-2xl mx-auto">
+                 <span className="line-through">Material You theme dành cho Hako/DocLN.</span><br/>
+                 <strong className="text-primary">KHÔNG CHỈ ĐƠN GIẢN LÀ MỘT THEME. NÓ CÒN HƠN THẾ NỮA!!!</strong>
               </p>
-              <div className="flex justify-center">
+                <div className="flex justify-center gap-2 flex-wrap">
+                    <img src="https://img.shields.io/badge/Tampermonkey-Supported-green.svg" alt="Tampermonkey Supported" />
+                    <img src="https://img.shields.io/badge/Violentmonkey-Supported-green.svg" alt="Violentmonkey Supported" />
+                    <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License MIT" />
+                    <a href="https://discord.gg/uvQ6A3CDPq" target="_blank" rel="noopener noreferrer">
+                        <img src="https://img.shields.io/discord/1201419657282863104?style=for-the-badge&logo=discord&logoColor=%23fff&logoSize=25&label=Tham%20gia%20Discord&color=%235865f2" alt="Discord" />
+                    </a>
+                </div>
+
+              <div className="flex justify-center gap-4">
                 <Button asChild size="lg" className="gap-2 shadow-lg hover:shadow-xl transition-shadow">
+                  <Link href="https://sang765.github.io/HakoMonetTheme/HakoMonetTheme.user.js" target="_blank" rel="noopener noreferrer">
+                    <Download />
+                    Cài đặt ngay
+                  </Link>
+                </Button>
+                 <Button asChild size="lg" variant="secondary" className="gap-2 shadow-lg hover:shadow-xl transition-shadow">
                   <Link href="https://github.com/sang765/HakoMonetTheme" target="_blank" rel="noopener noreferrer">
                     <Github />
-                    View on GitHub
+                    Xem trên GitHub
                   </Link>
                 </Button>
               </div>
@@ -163,10 +264,10 @@ export default function Home() {
             <div className="mx-auto max-w-5xl space-y-12">
               <div className="text-center space-y-4">
                 <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
-                  Core Features
+                  🌟 Tính năng 🌟
                 </h2>
                 <p className="font-body max-w-2xl mx-auto text-muted-foreground md:text-lg">
-                  Discover the key characteristics that make HakoMonet a joy to use.
+                  Khám phá các tính năng chính giúp Hako: Monet Theme trở nên đặc biệt.
                 </p>
               </div>
               <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
@@ -187,14 +288,180 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+         {/* Screenshots Section */}
+        <section id="screenshots" className="w-full py-16 md:py-24 border-t">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-5xl space-y-12">
+              <div className="text-center space-y-4">
+                <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
+                  🖼️ Ảnh chụp màn hình 🖼️
+                </h2>
+                <p className="font-body max-w-2xl mx-auto text-muted-foreground md:text-lg">
+                  Xem qua một vài hình ảnh về giao diện của Hako: Monet Theme.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                 <Card className="overflow-hidden"><CardContent className="p-0"><Image src="https://raw.githubusercontent.com/sang765/HakoMonetTheme/main/.github/assets/home-theme-preview.webp" width={600} height={400} alt="Homepage Preview" className="w-full h-auto" /></CardContent><CardHeader><CardTitle>Trang chủ</CardTitle></CardHeader></Card>
+                 <Card className="overflow-hidden"><CardContent className="p-0"><Image src="https://raw.githubusercontent.com/sang765/HakoMonetTheme/main/.github/assets/info-truyen-theme-preview.webp" width={600} height={400} alt="Novel Info Preview" className="w-full h-auto" /></CardContent><CardHeader><CardTitle>Trang thông tin truyện</CardTitle></CardHeader></Card>
+                 <Card className="overflow-hidden"><CardContent className="p-0"><Image src="https://raw.githubusercontent.com/sang765/HakoMonetTheme/main/.github/assets/desktop-settings.webp" width={600} height={400} alt="Settings Preview" className="w-full h-auto" /></CardContent><CardHeader><CardTitle>Cài đặt Userscript</CardTitle></CardHeader></Card>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        {/* Installation Section */}
+        <section id="installation" className="w-full py-16 md:py-24 bg-card/50 border-t">
+            <div className="container mx-auto px-4 md:px-6">
+                <div className="mx-auto max-w-5xl space-y-12">
+                    <div className="text-center space-y-4">
+                        <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
+                            📦 Cài đặt 📦
+                        </h2>
+                        <p className="font-body max-w-2xl mx-auto text-muted-foreground md:text-lg">
+                            Làm theo các bước đơn giản sau để cài đặt và trải nghiệm.
+                        </p>
+                    </div>
+                    <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+                        <Card>
+                            <CardHeader>
+                                <CardTitle className="flex items-center gap-2"><span className="flex items-center justify-center size-8 rounded-full bg-primary text-primary-foreground">1</span>Cài đặt Extension</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <p>Cài đặt một userscript manager cho trình duyệt của bạn.</p>
+                                <div className="mt-4 space-y-2">
+                                    <Button asChild variant="outline" className="w-full justify-between">
+                                        <Link href="https://www.tampermonkey.net/" target="_blank" rel="noopener noreferrer">Tampermonkey <ArrowRight /></Link>
+                                    </Button>
+                                    <Button asChild variant="outline" className="w-full justify-between">
+                                        <Link href="https://violentmonkey.github.io/get-it/" target="_blank" rel="noopener noreferrer">Violentmonkey <ArrowRight /></Link>
+                                    </Button>
+                                </div>
+                            </CardContent>
+                        </Card>
+                        <Card>
+                             <CardHeader>
+                                <CardTitle className="flex items-center gap-2"><span className="flex items-center justify-center size-8 rounded-full bg-primary text-primary-foreground">2</span>Cài đặt Script</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                 <p>Nhấp vào nút bên dưới và chọn "Install".</p>
+                                <div className="mt-4">
+                                     <Button asChild className="w-full">
+                                        <Link href="https://sang765.github.io/HakoMonetTheme/HakoMonetTheme.user.js" target="_blank" rel="noopener noreferrer">Cài đặt Hako: Monet Theme</Link>
+                                    </Button>
+                                </div>
+                                <Image src="https://raw.githubusercontent.com/sang765/HakoMonetTheme/main/.github/assets/Install_us.jpg" width={400} height={200} alt="Install Userscript" className="mt-4 rounded-md border" />
+                            </CardContent>
+                        </Card>
+                         <Card>
+                             <CardHeader>
+                                <CardTitle className="flex items-center gap-2"><span className="flex items-center justify-center size-8 rounded-full bg-primary text-primary-foreground">3</span>Cấp quyền</CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                 <p>Khi được hỏi, hãy chọn "Always allow domain" để script hoạt động.</p>
+                                <Image src="https://raw.githubusercontent.com/sang765/HakoMonetTheme/main/.github/assets/userscript_asking.jpg" width={400} height={200} alt="Allow Domain" className="mt-4 rounded-md border" />
+                            </CardContent>
+                        </Card>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {/* Technical Features Section */}
+        <section id="tech-features" className="w-full py-16 md:py-24 border-t">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-5xl space-y-12">
+              <div className="text-center space-y-4">
+                <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
+                  🔧 Chi tiết kỹ thuật 🔧
+                </h2>
+                <p className="font-body max-w-2xl mx-auto text-muted-foreground md:text-lg">
+                  Các công nghệ và phương pháp cốt lõi đằng sau Hako: Monet Theme.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                {technicalFeatures.map((feature, index) => (
+                  <Card key={index} className="flex flex-col items-center text-center p-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+                    <div className="mb-4 rounded-full bg-primary/10 p-4">
+                      {feature.icon}
+                    </div>
+                    <CardHeader className="p-0 mb-2">
+                      <CardTitle className="font-headline text-xl">{feature.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-0">
+                      <p className="text-muted-foreground">{feature.description}</p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Privacy Section */}
+        <section id="privacy" className="w-full py-16 md:py-24 bg-card/50 border-t">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-3xl text-center space-y-4">
+              <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
+                🔒 Quyền riêng tư & Thu thập dữ liệu 🔒
+              </h2>
+              <p className="font-body text-muted-foreground md:text-lg">
+                Sự riêng tư của bạn là ưu tiên hàng đầu của chúng tôi. Script này được thiết kế để hoạt động hoàn toàn trong trình duyệt của bạn mà không thu thập bất kỳ dữ liệu cá nhân nào.
+              </p>
+               <Card className="text-left">
+                    <CardContent className="p-6 space-y-4">
+                        <p className="flex items-start gap-4"><ShieldCheck className="size-6 text-green-500 mt-1 shrink-0" /><span>Script hoạt động hoàn toàn trong trình duyệt của bạn và không gửi bất kỳ dữ liệu nào ra ngoài.</span></p>
+                        <p className="flex items-start gap-4"><ShieldCheck className="size-6 text-green-500 mt-1 shrink-0" /><span>Phân tích màu sắc từ ảnh bìa truyện được thực hiện cục bộ bằng Canvas API.</span></p>
+                        <p className="flex items-start gap-4"><ShieldCheck className="size-6 text-green-500 mt-1 shrink-0" /><span>Cài đặt người dùng được lưu trữ cục bộ thông qua bộ nhớ của Tampermonkey/Violentmonkey.</span></p>
+                        <p className="flex items-start gap-4"><ShieldCheck className="size-6 text-green-500 mt-1 shrink-0" /><span>Cookie chỉ được sử dụng cho các tính năng cụ thể và không chứa thông tin cá nhân.</span></p>
+                    </CardContent>
+                </Card>
+            </div>
+          </div>
+        </section>
+        
+        {/* FAQ Section */}
+        <section id="faq" className="w-full py-16 md:py-24 border-t">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="mx-auto max-w-3xl space-y-8">
+              <div className="text-center space-y-4">
+                <h2 className="font-headline text-3xl font-bold tracking-tight sm:text-4xl">
+                   ❓ Hỏi đáp thường gặp ❓
+                </h2>
+                 <p className="font-body text-muted-foreground md:text-lg">
+                  ...mà không ai hỏi :)))
+                </p>
+              </div>
+              <Accordion type="single" collapsible className="w-full">
+                {faqItems.map((item, index) => (
+                  <AccordionItem key={index} value={`item-${index}`}>
+                    <AccordionTrigger>{item.question}</AccordionTrigger>
+                    <AccordionContent>
+                      {item.answer}
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </div>
+          </div>
+        </section>
       </main>
 
       {/* Footer */}
-      <footer className="py-6 border-t">
-        <div className="container mx-auto px-4 md:px-6 text-center text-sm text-muted-foreground">
-          <p>Showcase for HakoMonetTheme by sang765. Built with Next.js and shadcn/ui.</p>
+      <footer className="py-6 border-t bg-muted/40">
+        <div className="container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="text-center md:text-left">
+                 <p className="text-sm text-muted-foreground">Showcase for Hako: Monet Theme by <Link href="https://github.com/sang765" target="_blank" className="font-medium hover:underline">sang765</Link>.</p>
+                 <p className="text-xs text-muted-foreground">Lưu ý: Script này không chính thức liên kết với Hako/DocLN và được phát triển độc lập bởi cộng đồng.</p>
+            </div>
+            <div className="text-center text-sm text-muted-foreground">
+                 <p>Built with Next.js, shadcn/ui, and Tailwind CSS.</p>
+            </div>
         </div>
       </footer>
     </div>
   );
 }
+
+    
