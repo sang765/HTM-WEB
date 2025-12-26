@@ -145,23 +145,28 @@ export default function Home() {
                   <span className="sr-only">Mở menu</span>
                 </Button>
               </SheetTrigger>
-              <SheetContent side="left">
+              <SheetContent side="left" className="flex flex-col">
                 <SheetTitle className="sr-only">Menu</SheetTitle>
-                <div className="grid gap-4 py-4">
-                   <Link href="#features" className="text-muted-foreground">
-                    Tính năng
-                  </Link>
-                  <Link href="#screenshots" className="text-muted-foreground">
-                    Ảnh chụp màn hình
-                  </Link>
-                   <Link href="#installation" className="text-muted-foreground">
-                    Cài đặt
-                  </Link>
-                   <Link href="#faq" className="text-muted-foreground">
-                    Hỏi đáp
-                  </Link>
+                <div className="flex-1">
+                  <div className="grid gap-4 py-4">
+                    <Link href="#features" className="text-muted-foreground">
+                      Tính năng
+                    </Link>
+                    <Link href="#screenshots" className="text-muted-foreground">
+                      Ảnh chụp màn hình
+                    </Link>
+                    <Link href="#installation" className="text-muted-foreground">
+                      Cài đặt
+                    </Link>
+                    <Link href="#faq" className="text-muted-foreground">
+                      Hỏi đáp
+                    </Link>
+                  </div>
+                </div>
+                <div className="flex justify-center pb-4">
                   <Link href="https://github.com/sang765/HakoMonetTheme" target="_blank" rel="noopener noreferrer" className="text-muted-foreground">
-                    GitHub
+                    <Github className="size-6" />
+                    <span className="sr-only">GitHub</span>
                   </Link>
                 </div>
               </SheetContent>
@@ -465,7 +470,3 @@ export default function Home() {
     </div>
   );
 }
-
-    
-
-    
